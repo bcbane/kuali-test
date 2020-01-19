@@ -6,21 +6,21 @@ const initialState = {
   elevators: [
     {
       currentFloor: 0,
-      currentGoal: null,
+      currentGoals: null,
       direction: null,
       totalTrips: 0,
       isDoorOpen: false,
     },
     {
       currentFloor: 0,
-      currentGoal: null,
+      currentGoals: null,
       direction: null,
       totalTrips: 0,
       isDoorOpen: false,
     },
     {
       currentFloor: 0,
-      currentGoal: null,
+      currentGoals: null,
       direction: null,
       totalTrips: 0,
       isDoorOpen: false,

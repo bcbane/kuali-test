@@ -4,12 +4,13 @@ const movingUp = 'UP';
 const movingDown = 'DOWN';
 
 const isIdealElevatorScenario = (elevatorToCheck) => (
-  get(elevator, 'currentGoal') === null &&
+  get(elevator, 'currentGoals') === null &&
   get(elevator, 'currentFloor') === requestedFloor
 );
 
 export const callElevator = (state, action) => {
   const requestedFloor = action.payload.requestedFloor;
+
   const elevatorIndexToSend = state.elevators.reduce(
     (bestElevatorIndex, elevator, index, allElevators) => {
       const currentFloor = get(elevator, 'currentFloor');
@@ -17,8 +18,8 @@ export const callElevator = (state, action) => {
       const isCurrentElevatorCloserToRequest = (
         Math.abs(requestedFloor - currentFloor) < Math.abs(requestedFloor - get(bestElevator, currentFloor))
       );
-      const currentGoal = get(elevator, 'currentGoal');
-      const isUnoccupied = isNil(currentGoal);
+      const currentGoals = get(elevator, 'currentGoals');
+      const isUnoccupied = isNil(currentGoals);
 
       const currentBestElevator = !isNil(bestElevatorIndex) ? allElevators[bestElevatorIndex] : null;
 
@@ -60,5 +61,25 @@ export const callElevator = (state, action) => {
       return bestElevatorIndex;
     }, 
     null
-  )
+  );
+
+  if (!isNil(elevatorIndexToSend)) {
+    const elevatorToSend = state.elevators[elevatorIndexToSend];
+    const currentFloor = elevatorToSend.currentFloor;
+    const requestedFloorDirection = (requestedFloor - currentFloor) > 0 ? movingUp : movingDown;
+    let newGoals = elevatorToSend.currentGoals;
+    newGoals.push(requestedFloor);
+    if (newGoals.length > 1) {
+      direction === movingUp ? 
+        numArray.sort((a, b) => a - b) : 
+        numArray.sort((a, b) => b - a)
+    }
+
+
+    const updatedElevatorToSend = {
+      ...elevatorToSend,
+      currentGoals: newGoals,
+      direction: requestedFloorDirection,
+    }
+  }
 }
