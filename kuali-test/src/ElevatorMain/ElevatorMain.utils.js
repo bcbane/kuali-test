@@ -80,6 +80,67 @@ export const callElevator = (state, action) => {
       ...elevatorToSend,
       currentGoals: newGoals,
       direction: requestedFloorDirection,
+    };
+
+    const updatedElevators = state.elevators;
+    updatedElevators[elevatorIndexToSend] = updatedElevatorToSend;
+
+    return {
+      ...state,
+      elevators: updatedElevators,
     }
   }
 }
+
+export const reportFloor = (state, action) => {
+  const elevatorIndex = action.payload.elevatorIndex;
+  const currentFloor = action.payload.currentFloor;
+
+  const updatedElevator = {
+    ...state.elevators[elevatorIndex],
+    currentFloor,
+  };
+
+  const updatedElevators = state.elevators;
+  updatedElevators[elevatorIndex] = updatedElevator;
+
+  return {
+    ...state,
+    elevators: updatedElevators,
+  }
+}
+
+export const openDoor = (state, action) => {
+  const elevatorIndex = action.payload.elevatorIndex;
+
+  const updatedElevator = {
+    ...state.elevators[elevatorIndex],
+    isDoorOpen: true,
+  };
+
+  const updatedElevators = state.elevators;
+  updatedElevators[elevatorIndex] = updatedElevator;
+
+  return {
+    ...state,
+    elevators: updatedElevators,
+  }
+}
+
+export const closeDoor = (state, action) => {
+  const elevatorIndex = action.payload.elevatorIndex;
+
+  const updatedElevator = {
+    ...state.elevators[elevatorIndex],
+    isDoorOpen: false,
+  };
+
+  const updatedElevators = state.elevators;
+  updatedElevators[elevatorIndex] = updatedElevator;
+
+  return {
+    ...state,
+    elevators: updatedElevators,
+  }
+}
+
