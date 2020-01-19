@@ -1,13 +1,24 @@
 import React, { useReducer } from 'react';
 import ElevatorMain from './ElevatorMain';
 
-const initialState = { count: 0 };
+const initialState = {
+  numberOfFloors: 34,
+  elevators: [
+    {},
+    {},
+    {},
+    {},
+    {},
+  ]
+};
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'increment':
+    case 'callElevator':
       return { count: state.count + 1 };
-    case 'decrement':
+    case 'floorPassed':
+      return { count: state.count - 1 };
+    case 'arrived':
       return { count: state.count - 1 };
     default:
       throw new Error();
@@ -17,7 +28,7 @@ function reducer(state, action) {
 function ElevatorMainDataLayer() {
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  
+
   return (
    
   );
