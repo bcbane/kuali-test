@@ -10,25 +10,26 @@ const isIdealElevatorScenario = (elevatorToCheck) => (
 
 export const callElevator = (state, action) => {
   const requestedFloor = action.payload.requestedFloor;
-  const elevatorToSend = state.elevators.reduce(
-    (bestElevator, elevator, index) => {
-      const updatedElevators = elevators;
-
+  const elevatorIndexToSend = state.elevators.reduce(
+    (bestElevatorIndex, elevator, index, allElevators) => {
       const currentFloor = get(elevator, 'currentFloor');
       const direction = get(elevator, 'direction');
+      const isCurrentElevatorCloserToRequest = (
+        Math.abs(requestedFloor - currentFloor) < Math.abs(requestedFloor - get(bestElevator, currentFloor))
+      );
+      const currentGoal = get(elevator, 'currentGoal');
+      const isUnoccupied = isNil(currentGoal);
 
-      if (isNull(bestElevator)) {
-        return elevator;
-      }
+      const currentBestElevator = !isNil(bestElevatorIndex) ? allElevators[bestElevatorIndex] : null;
 
       //A previous elevator is the best solution
-      if (!isNull(bestElevator) && isIdealElevatorScenario(currentBestElevator)) {
-        return bestElevator;
+      if (!isNull(currentBestElevator) && isIdealElevatorScenario(currentBestElevator)) {
+        return bestElevatorIndex;
       } 
 
       // The current elevator is the best solution
       else if (isIdealElevatorScenario(elevator)) {
-        return elevator;
+        return index;
       } 
 
       // The current Elevator is moving toward 
@@ -37,12 +38,26 @@ export const callElevator = (state, action) => {
         (
           (currentFloor < requestedFloor && direction === movingUp) ||
           (currentFloor > requestedFloor && direction === movingDown)
-        ) &&
-          Math.abs(requestedFloor - currentFloor) < Math.abs(requestedFloor - get(bestElevator, currentFloor))
+        )
       ) {
-        return elevator;
+        if (isNil(currentBestElevator)) {
+          return index;
+        } else if (isCurrentElevatorCloserToRequest) {
+          return index;
+        }
       }
-      return updatedElevators
+      
+      // the current elevator is unnoccupied and closer that current best elevator
+      else if (isUnoccupied) {
+        if (isNil(currentBestElevator)) {
+          return index;
+        }
+        else if (isCurrentElevatorCloserToRequest) {
+          return index;
+        }
+      }
+
+      return bestElevatorIndex;
     }, 
     null
   )
