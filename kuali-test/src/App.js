@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import ElevatorMain from './ElevatorMain/index';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
         <p>
           Kuali Elevator
         </p>
+        <ElevatorMain/>
       </header>
     </div>
   );
