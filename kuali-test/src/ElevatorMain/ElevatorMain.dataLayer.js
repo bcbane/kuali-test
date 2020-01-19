@@ -16,6 +16,7 @@ const initialState = {
       currentGoals: null,
       direction: null,
       totalTrips: 0,
+      floorsPassed: 0,
       isDoorOpen: false,
     },
     {
@@ -23,6 +24,7 @@ const initialState = {
       currentGoals: null,
       direction: null,
       totalTrips: 0,
+      floorsPassed: 0,
       isDoorOpen: false,
     },
     {
@@ -30,6 +32,7 @@ const initialState = {
       currentGoals: null,
       direction: null,
       totalTrips: 0,
+      floorsPassed: 0,
       isDoorOpen: false,
     },
   ]

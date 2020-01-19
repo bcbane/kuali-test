@@ -94,10 +94,12 @@ export const callElevator = (state, action) => {
 export const reportFloor = (state, action) => {
   const elevatorIndex = action.payload.elevatorIndex;
   const currentFloor = action.payload.currentFloor;
+  const floorsPassed = action.payload.floorsPassed;
 
   const updatedElevator = {
     ...state.elevators[elevatorIndex],
     currentFloor,
+    floorsPassed: floorsPassed++,
   };
 
   const updatedElevators = state.elevators;
